@@ -1,0 +1,17 @@
+# used to compile requirements.txt with pip-compile requirements.in
+# required for sphinx
+sphinx
+sphinx-rtd-theme
+sphinx-autoapi
+myst-nb
+jupytext
+# required for simcats
+numpy
+matplotlib
+colorednoise
+scipy
+bezier
+sympy
+pandas
+opencv-python
+diplib

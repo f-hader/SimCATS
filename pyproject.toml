@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simcats"
+version = "1.0.0" # also update in docs (conf.py) and simcats (__init__.py)
+license = { text="CC BY-NC-SA 4.0" }
+authors = [
+    { name="Fabian Hader", email="f.hader@fz-juelich.de" },
+    { name="Sarah Fleitmann", email="s.fleitmann@fz-juelich.de" },
+    { name="Fabian Fuchs", email="f.fuchs@fz-juelich.de" },
+]
+description = """\
+    SimCATS is a python framework for simulating charge stability diagrams (CSDs) typically measured during the tuning process of qubits.\
+    """
+requires-python = ">=3.7"
+readme = "README.md"
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Science/Research',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Topic :: Scientific/Engineering',
+    'Typing :: Typed',
+]
+dependencies = [
+    'bezier',
+    'colorednoise',
+    'diplib',
+    'matplotlib',
+    'numpy',
+    'opencv-python',
+    'scipy',
+    'sympy'
+]
+
+[project.urls]
+homepage = "https://github.com/f-hader/SimCATS"
+documentation = "https://simcats.readthedocs.io"
+source = "https://github.com/f-hader/SimCATS"
+tracker = "https://github.com/f-hader/SimCATS/issues"
