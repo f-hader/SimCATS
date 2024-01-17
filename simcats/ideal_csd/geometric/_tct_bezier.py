@@ -84,12 +84,14 @@ def tct_bezier(
 
     # initialize bezier curve
     bezier_curve = bezier.Curve.from_nodes(nodes)
-    xb, yb = sympy.symbols("x y")
-    bezier_implicit = bezier_curve.implicitize()
     # retrieve a lookup-table if the given lut_entries value is not None
     if lut_entries:
         t = np.linspace(0, 1, lut_entries)
         bezier_lut = bezier_curve.evaluate_multi(t)
+    else:
+        xb, yb = sympy.symbols("x y")
+        bezier_implicit = bezier_curve.implicitize()
+        bezier_implicit_solved = sympy.solve(bezier_implicit, yb)
 
     # retrieve length of bezier curve & period length. Both are required to calculate the region
     # where the x-values to be evaluated are located
@@ -116,7 +118,12 @@ def tct_bezier(
         # all other ids are simulated as linear parts
         # lowest value = left bezier anchor
         # highest value = right bezier anchor + #additional_peaks * period length
-        x_range_wave = np.array([tct_params[4], (tct_params[6] + (max_peaks - 1) * (tct_params[0] + tct_params[1]))])
+        x_range_wave = np.array(
+            [
+                tct_params[4],
+                (tct_params[6] + (max_peaks - 1) * (tct_params[0] + tct_params[1])),
+            ]
+        )
         ids_wave = np.where((x_eval + offset_x >= x_range_wave[0]) & (x_eval + offset_x <= x_range_wave[1]))[0]
     else:
         x_range_wave = [x_eval[0], x_eval[-1]]
@@ -138,7 +145,10 @@ def tct_bezier(
                     y_res[x_id] = bezier_lut[1, np.argmin(np.abs(bezier_lut[0, :] - (x_mod_per + offset_x)))]
                 else:
                     # use sympy to solve symbolic expression for x, because s is not linearly mapped to x
-                    temp_y = sympy.solve(bezier_implicit.subs({xb: x_mod_per + offset_x}), yb)
+                    temp_y = [
+                        bezier_implicit_solution.subs({xb: x_mod_per + offset_x})
+                        for bezier_implicit_solution in bezier_implicit_solved
+                    ]
                     # might get two solutions because implicit function might be quadratic. If so, the second solution
                     # is the positive one and selected therefore, as we assume to have only positive y-values after
                     # rotating a signal with only positive x- & y-values by 45 degree
@@ -168,9 +178,10 @@ def tct_bezier(
                     )
                 else:
                     # use sympy to solve symbolic expression for x, because s is not linearly mapped to x
-                    temp_y = sympy.solve(
-                        bezier_implicit.subs({xb: 2 * bezier_length + right_lin_length - x_mod_per + offset_x}), yb
-                    )
+                    temp_y = [
+                        bezier_implicit_solution.subs({xb: 2 * bezier_length + right_lin_length - x_mod_per + offset_x})
+                        for bezier_implicit_solution in bezier_implicit_solved
+                    ]
                     # might get two solutions because implicit function might be quadratic. If so, the second solution
                     # is the positive one and selected therefore, as we assume to have only positive y-values after
                     # rotating a signal with only positive x- & y-values by 45 degree

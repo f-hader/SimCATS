@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simcats"
-version = "1.0.0" # also update in docs (conf.py) and simcats (__init__.py)
+version = "1.1.0" # also update in docs (conf.py) and simcats (__init__.py)
 license = { text="CC BY-NC-SA 4.0" }
 authors = [
     { name="Fabian Hader", email="f.hader@fz-juelich.de" },

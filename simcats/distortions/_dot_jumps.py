@@ -156,11 +156,16 @@ class OccupationDotJumps(OccupationDistortionInterface):
             numpy array with the axis mapping to the CSD axis.
 
         """
-        if not bool(self.rng.binomial(1, self.ratio)):
-            self.__activated = False
+        if freeze and not self.__activated:
             return occupations, lead_transitions
-        else:
-            self.__activated = True
+
+        # only resample activation if not frozen
+        if not freeze:
+            if not bool(self.rng.binomial(1, self.ratio)):
+                self.__activated = False
+                return occupations, lead_transitions
+            else:
+                self.__activated = True
 
         resolution = occupations.shape[0:2]
         if freeze:
@@ -467,8 +472,8 @@ class OccupationDotJumps(OccupationDistortionInterface):
                     volt_limits_g2=volt_limits_g2,
                     resolution=(max_jump, occupation.shape[0]) if max_jump > 1 else (occupation.shape[0]),
                 )
-                left_occupation = np.reshape(left_occupation, (occupation.shape[1], max_jump, 2))
-                left_charge_transitions = np.reshape(left_charge_transitions, (occupation.shape[1], max_jump))
+                left_occupation = np.reshape(left_occupation, (occupation.shape[0], max_jump, 2))
+                left_charge_transitions = np.reshape(left_charge_transitions, (occupation.shape[0], max_jump))
                 occupation_stacked = np.hstack((left_occupation, occupation))
                 if lead_transitions is not None:
                     total_charge_transitions_stacked = np.hstack((left_charge_transitions, lead_transitions))

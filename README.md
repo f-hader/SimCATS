@@ -1,11 +1,11 @@
 # SimCATS
 
-Simulation of CSDs for Automated Tuning Solutions (`SimCATS`) is a python framework for simulating charge stability 
+Simulation of CSDs for Automated Tuning Solutions (`SimCATS`) is a Python framework for simulating charge stability 
 diagrams (CSDs) typically measured during the tuning process of qubits.
 
 ## Installation
 
-The framework supports python versions 3.7 - 3.11 and can be installed with pip:
+The framework supports Python versions 3.7 - 3.11 and installs via pip:
 ```
 pip install simcats
 ```
@@ -17,63 +17,62 @@ containing the `setup.py` file and executing
 pip install .
 ```
 
-For installation in development/editable mode use the option `-e`.
+For the installation in development/editable mode, use the option `-e`.
 
 ## Examples / Tutorials
-After the package is installed, a good starting point is a look into the Jupyter Notebook 
-`example_SimCATS_simulation_class.ipynb`, which provides an overview for the usage of the simulation class offered by 
+After installing the package, a good starting point is a look into the Jupyter Notebook 
+`example_SimCATS_simulation_class.ipynb`, which provides an overview of the usage of the simulation class offered by 
 the framework. 
-For more detailed examples and explanations of the geometric ideal CSD simulation using Total Charge Transitions (TCTs),
-have a look at the Jupyter Notebook `example_SimCATS_IdealCSDGeometric.ipynb`. This notebook also includes a hint
-regarding the generation of required labels for training algorithms, that might need line labels defined as start and
+For more detailed examples and explanations of the geometric ideal CSD simulation using Total Charge Transitions (TCTs), look at the Jupyter Notebook `example_SimCATS_IdealCSDGeometric.ipynb`. This notebook also includes a hint
+regarding the generation of required labels for training algorithms that might need line labels defined as start and
 end points or require semantic information about particular transitions.
 
 ## Tests
 
-The test are written for the `PyTest` framework but should also work with the `unittest` framework.
+The tests are written for the `PyTest` framework but should also work with the `unittest` framework.
 
-To run the tests install the packages `pytest`, `pytest-cov` and `pytest-xdist` with
+To run the tests, install the packages `pytest`, `pytest-cov`, and `pytest-xdist` with
 
 ```
 pip install pytest pytest-cov pytest-xdist
 ```
 
-and then simply run following command in the terminal of your choice:
+and run the following command:
 
 ```
 pytest --cov=simcats -n auto --dist loadfile .\tests\
 ```
 
-The argument `--cov=simcats` enables a coverage summary of the `SimCATS` package, the argument `-n auto` enables the
-test to run with multiple threads (auto will choose as many threads as possible, but can be replaced with a specific
-number of threads to use) and the argument `--dist loadfile` specifies that each file should be executed only by one
-thread.
+The argument 
+- `--cov=simcats` enables a coverage summary of the `SimCATS` package,
+- `-n auto` enables the test to run with multiple threads (auto will choose as many threads as possible, but can be replaced with a specific number of threads to use), and
+- `--dist loadfile` specifies that each file should be executed only by one thread.
 
 <!-- start sec:documentation -->
 ## Documentation
 
-The official documentation is hosted on [ReadtheDocs](https://simcats.readthedocs.io), but can also be build locally.
-To do this, first install the packages `sphinx`, `sphinx-rtd-theme`, `sphinx-autoapi`,`myst-nb ` and `jupytext` with
+The official documentation is hosted on [ReadtheDocs](https://simcats.readthedocs.io), but can also be built locally.
+To do this, first install the packages `sphinx`, `sphinx-rtd-theme`, `sphinx-autoapi`, `myst-nb `, and `jupytext` with
 
 ```
 pip install sphinx sphinx-rtd-theme sphinx-autoapi myst-nb jupytext
 ```
 
-and then, in the `docs` folder, execute the following command in a terminal of your choice:
+and then, in the `docs` folder, execute the following command:
 
 ```
 .\make html
 ```
 
-To view the generated HTML documentation open the file `docs\build\html\index.html` with a browser of your choice.
+To view the generated HTML documentation, open the file `docs\build\html\index.html`.
 <!-- end sec:documentation -->
 
 ## Structure of SimCATS
 
-The main user interface for `SimCATS` is the class `Simulation`, which combines all the necessary functionalities to
-measure (simulate) a CSD and to adjust the parameters for the simulated measurement. The class `Simulation` and default
-configurations for the simulation (`default_configs`) can be imported directly from `simcats`. Asides from that,
-`SimCATS` contains the subpackages `ideal_csd`, `sensor`, `distortions`, and `support_functions`. These are described in
+The primary user interface for `SimCATS` is the class `Simulation`, which combines all the necessary functionalities to
+measure (simulate) a CSD and adjust the parameters for the simulated measurement. The class `Simulation` and default
+configurations for the simulation (`default_configs`) can be imported directly from `simcats`. Aside from that,
+`SimCATS` contains the subpackages `ideal_csd`, `sensor`, `distortions`, and `support_functions`, described in
 the following sections.
 
 ### Module `simulation`
@@ -83,17 +82,16 @@ An instance of the simulation class requires
 -   an implementation of the `IdealCSDInterface` for the simulation of ideal CSD data,
 -   an implementation of the `SensorInterface` for the simulation of the sensor (dot) reaction based on the ideal CSD
 data, and
--   (optionally) implementations of the desired types of distortions, which can be implementations from either
-`OccupationDistortionInterface`, `SensorPotentialDistortionInterface`, or `SensorResponseDistortionInterface`.
+-   (optionally) implementations of the desired types of distortions, which can be implementations from `OccupationDistortionInterface`, `SensorPotentialDistortionInterface`, or `SensorResponseDistortionInterface`.
 
-With an initialized instance of the `Simulation` class it is possible to run simulations using the `measure` function
+With an initialized instance of the `Simulation` class, it is possible to run simulations using the `measure` function
 (see `example_SimCATS_simulation_class.ipynb`).
 
 ### Subpackage `ideal_csd`
 
-This subpackage contains the `IdealCSDInterface`, that is used by the `Simulation` class for the generation of ideal CSD
-data, and an implementation of the `IdealCSDInterface` (`IdealCSDGeometric`) based on our geometric simulation approach.
-Additionally, in the subpackage `geometric`, it contains the functions used by `IdealCSDGeometric`, including the
+This subpackage contains the `IdealCSDInterface` used by the `Simulation` class  and an implementation of
+the `IdealCSDInterface` (`IdealCSDGeometric`) based on our geometric simulation approach.
+Additionally, it contains in the subpackage `geometric` the functions used by `IdealCSDGeometric`, including the
 implementation of the total charge transition (TCT) definition and functions for calculating the occupations using TCTs.
 
 ### Subpackage `distortions`
@@ -106,34 +104,33 @@ subpackage are:
 -   white noise, generated by sampling from a normal distribution,
 -   pink noise, generated using the package colorednoise ([https://github.com/felixpatzelt/colorednoise](https://github.com/felixpatzelt/colorednoise)),
 -   random telegraph noise (RTN), generated using the algorithm described in ["Toward Robust Autotuning of Noisy Quantum Dot Devices" by Ziegler et al.](https://doi.org/10.1103/PhysRevApplied.17.024069) (RTN is called sensor jumps there),
--   dot jumps, simulated using the algorithm described in ["Toward Robust Autotuning of Noisy Quantum Dot Devices" by Ziegler et al.](https://doi.org/10.1103/PhysRevApplied.17.024069) (In the `Simulation` class this is applied to a whole block of rows or columns, but there is also a function for applying it linewise.), and
--   lead transition blurring, simulated using gaussian blurring.
+-   dot jumps, simulated using the algorithm described in ["Toward Robust Autotuning of Noisy Quantum Dot Devices" by Ziegler et al.](https://doi.org/10.1103/PhysRevApplied.17.024069) (In the `Simulation` class, this is applied to a whole block of rows or columns, but there is also a function for applying it linewise.), and
+-   lead transition blurring, simulated using Gaussian or Fermi-Dirac blurring.
 
-The implementations also offer the option to set ratios (parameter `ratio`), for how often the distortion is active
-(f.e. dot jumps may only happen sometimes and not in every measurement). Moreover, it is also possible to sample the
-noise parameters from a given sampling range. This can be done by using an object of type `ParameterSamplingInterface`.
+The implementations also offer the option to set ratios (parameter `ratio`) for the occurrence of the distortion (e.g. dot jumps may only happen sometimes and not in every measurement). Moreover, it is also possible to sample the
+noise parameters from a given sampling range using an object of type `ParameterSamplingInterface`.
 Classes for randomly sampling from a normal distribution or a uniform distribution within a given range are available in
 the subpackage `support_functions`.
-In this case the strength is randomly chosen from the given range for every measurement.
-Additionally, it is possible to specify, that this range should be a smaller subrange of the provided range.
-This allows to restrict distortion fluctuations during a simulation while allowing a large variety of different strengths
+In this case, the strength is randomly chosen from the given range for every measurement.
+Additionally, it is possible to specify that this range should be a smaller subrange of the provided range.
+This allows restricting distortion fluctuations during a simulation while enabling a large variety of different strengths
 for the initialization of the objects. <br>
-RTN, dot jumps and lead transition blurring are applied in the pixel domain. However, the length of jumps or the strength
-of the blurring should be consistent in the voltage domain even if the resolution changes. Therefore, the parameters
+RTN, dot jumps, and lead transition blurring are applied in the pixel domain. However, the jump length or the blurring strength should be consistent in the voltage domain even if the resolution changes. Therefore, the parameters
 are given in the voltage domain and adjusted according to the resolution in terms of pixel per voltage. <br>
-If a measurement with a continuous voltage sweep and averaging for each pixel is simulated, the noise strength of the white and pink noise should be adjusted if the resolution (volt per pixel) changes, as some of the noise is smoothed out. This smoothing depends on the type of averaging that is used and is not incorporated in the default implementation.
+For a simulated measurement with a continuous voltage sweep involving an averaging for each pixel, the noise strength of the
+white and pink noise should be adjusted if the resolution (volt per pixel) changes, due to smoothing out the noise. This smoothing depends on the type of averaging used and is not incorporated in the default implementation.
 
 ### Subpackage `sensor`
 
-This subpackage contains the `SensorInterface` that defines how a sensor simulation must be implemented to be used by the `Simulation` class. The `SensorPeakInterface` provides the desired representation for the definition of the Coulomb peaks used by the sensor. `SensorGeneric` implements the `SensorInterface` and offers functions for simulating the sensor response and the sensor potential. It offers the possibility to simulate with a single or multiple sensor peaks. Current implementations of the `SensorPeakInterface` are `SensorPeakGaussian` and `SensorPeakLorentzian`.
+This subpackage contains the `SensorInterface` that defines how a sensor simulation must be implemented to be used by the `Simulation` class. The `SensorPeakInterface` provides the desired representation for the definition of the Coulomb peaks the sensor uses. `SensorGeneric` implements the `SensorInterface` and offers functions for simulating the sensor response and potential. It offers the possibility to simulate with a single peak or multiple sensor peaks. Current implementations of the `SensorPeakInterface` are `SensorPeakGaussian` and `SensorPeakLorentzian`.
 
 ### Subpackage `support_functions`
 
-This subpackage contains support functions, which are used by the end user as well as from different functions of the framework.  
-- `fermi_filter1d` is an implementation of a one dimensional Fermi-Dirac filter.
-- `plot_csd` is a function for plotting one and two-dimensional CSDs. The function can also be used to plot ground truth data (see `example_SimCATS_simulation_class.ipynb` for examples).  
-- `rotate_points` is a function for simply rotating coordinates (stored in a (n, 2) shaped array) by a given angle. This is especially used during the generation of the ideal data.
-- `ParameterSamplingInterface` defines an interface that can be implemented for randomly sampling (fluctuating) strengths of distortions.
+This subpackage contains support functions, which are used by the end user and by different functions of the framework.  
+- `fermi_filter1d` is an implementation of a one-dimensional Fermi-Dirac filter.
+- `plot_csd` plots one and two-dimensional CSDs. The function can also plot ground truth data (see `example_SimCATS_simulation_class.ipynb` for examples).  
+- `rotate_points` simply rotates coordinates (stored in a (n, 2) shaped array) by a given angle. It is especially used during the generation of the ideal data.
+- `ParameterSamplingInterface` defines an interface for randomly sampled (fluctuated) strengths of distortions.
   - `NormalSamplingRange` and `UniformSamplingRange` are implementations of the `ParameterSamplingInterface`.
 
 ## License, CLA, and Copyright
@@ -149,6 +146,6 @@ This work is licensed under a
 [cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
 [cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
 
-Contributions must follow the Contributor License Agreement. For more information see the CONTRIBUTING.md file at the top level of the GitHub repository.
+Contributions must follow the Contributor License Agreement. For more information, see the CONTRIBUTING.md file at the top of the GitHub repository.
 
 Copyright © 2023 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)

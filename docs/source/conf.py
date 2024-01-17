@@ -6,7 +6,7 @@ import shutil
 project = "SimCATS"
 copyright = "2023 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)"
 author = "Fabian Hader, Sarah Fleitmann, Fabian Fuchs"
-release = "1.0.0"
+release = "1.1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
