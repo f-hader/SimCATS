@@ -12,6 +12,5 @@ colorednoise
 scipy
 bezier
 sympy
-pandas
 opencv-python
 diplib

@@ -1,3 +1,23 @@
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/f-hader/SimCATS/main/SimCATS_symbol.svg" alt="SimCATS logo">
+  <br>
+</h1>
+
+<div align="center">
+  <a href="https://github.com/f-hader/SimCATS/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" alt="License: CC BY-NC-SA 4.0"/>
+  </a>
+  <a href="https://pypi.org/project/simcats/">
+    <img src="https://img.shields.io/pypi/v/simcats.svg" alt="PyPi Latest Release"/>
+  </a>
+  <a href="https://simcats.readthedocs.io/en/latest/">
+    <img src="https://img.shields.io/readthedocs/simcats" alt="Read the Docs"/>
+  </a>
+  <a href="https://doi.org/10.1109/TQE.2024.3445967">
+    <img src="https://img.shields.io/badge/DOI-10.1109/TQE.2024.3445967-007ec6.svg" alt="DOI Publication"/>
+  </a>
+</div>
+
 # SimCATS
 
 Simulation of CSDs for Automated Tuning Solutions (`SimCATS`) is a Python framework for simulating charge stability 
@@ -133,6 +153,20 @@ This subpackage contains support functions, which are used by the end user and b
 - `ParameterSamplingInterface` defines an interface for randomly sampled (fluctuated) strengths of distortions.
   - `NormalSamplingRange` and `UniformSamplingRange` are implementations of the `ParameterSamplingInterface`.
 
+## Citations
+
+```bibtex
+@article{hader2024simcats,
+  author={Hader, Fabian and Fleitmann, Sarah and Vogelbruch, Jan and Geck, Lotte and Waasen, Stefan van},
+  journal={IEEE Transactions on Quantum Engineering}, 
+  title={Simulation of Charge Stability Diagrams for Automated Tuning Solutions (SimCATS)}, 
+  year={2024},
+  volume={5},
+  pages={1-14},
+  doi={10.1109/TQE.2024.3445967}
+}
+```
+
 ## License, CLA, and Copyright
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
@@ -148,4 +182,4 @@ This work is licensed under a
 
 Contributions must follow the Contributor License Agreement. For more information, see the CONTRIBUTING.md file at the top of the GitHub repository.
 
-Copyright © 2023 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)
+Copyright © 2024 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)

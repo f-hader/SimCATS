@@ -6,4 +6,4 @@ from ._simulation import Simulation
 from ._default_configs import default_configs
 
 __all__ = ["Simulation", "default_configs"]
-__version__ = "1.1.0"
+__version__ = "1.2.0"
