@@ -10,6 +10,7 @@ authors = [
     { name="Fabian Hader", email="f.hader@fz-juelich.de" },
     { name="Sarah Fleitmann", email="s.fleitmann@fz-juelich.de" },
     { name="Fabian Fuchs", email="f.fuchs@fz-juelich.de" },
+    { name="Jan Vogelbruch", email="j.vogelbruch@fz-juelich.de" },
 ]
 description = """\
     SimCATS is a python framework for simulating charge stability diagrams (CSDs) typically measured during the tuning process of qubits.\
