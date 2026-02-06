@@ -4,9 +4,9 @@ import os
 import shutil
 
 project = "SimCATS"
-copyright = "2024 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)"
-author = "Fabian Hader, Sarah Fleitmann, Fabian Fuchs"
-release = "1.2.0"
+copyright = "2026 Peter Grünberg Institute - Integrated Computing Architectures (ICA / PGI-4), Forschungszentrum Jülich GmbH"
+author = "Fabian Hader, Sarah Fleitmann, Benjamin Papajewski, Fabian Fuchs, Karin Havemann, Jan Vogelbruch"
+release = "2.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -76,15 +76,27 @@ inheritance_alias = {
     "simcats.distortions._random_telegraph_noise.SensorResponseRTN": "simcats.distortions.SensorResponseRTN",
     "simcats.distortions._white_noise.SensorResponseWhiteNoise": "simcats.distortions.SensorResponseWhiteNoise",
     "simcats.ideal_csd._ideal_csd_interface.IdealCSDInterface": "simcats.ideal_csd.IdealCSDInterface",
-    "simcats.ideal_csd.geometric._ideal_csd_geometric.IdealCSDGeometric": "simcats.ideal_csd.IdealCSDGeometric",
+    "simcats.ideal_csd.geometric._ideal_csd_geometric_class.IdealCSDGeometric": "simcats.ideal_csd.IdealCSDGeometric",
     "simcats.sensor._sensor_interface.SensorPeakInterface": "simcats.sensor.SensorPeakInterface",
+    "simcats.sensor._sensor_interface.SensorRiseInterface": "simcats.sensor.SensorRiseInterface",
+    "simcats.sensor.barrier_function._barrier_function_interface.BarrierFunctionInterface": "simcats.sensor.barrier_function.BarrierFunctionInterface",
+    "simcats.sensor.deformation._sensor_peak_deformation_interface.SensorPeakDeformationInterface": "simcats.sensor.deformation.SensorPeakDeformationInterface",
     "simcats.sensor._sensor_interface.SensorInterface": "simcats.sensor.SensorInterface",
-    "simcats.sensor._gaussian_sensor_peak.SensorPeakGaussian": "simcats.sensor.SensorPeakGaussian",
-    "simcats.sensor._lorentzian_sensor_peak.SensorPeakLorentzian": "simcats.sensor.SensorPeakLorentzian",
-    "simcats.sensor._generic_sensor.SensorGeneric": "simcats.sensor.SensorGeneric",
+    "simcats.sensor._sensor_interface.SensorScanSensorInterface": "simcats.sensor.SensorScanSensorInterface",
+    "simcats.sensor._sensor_peak_gaussian.SensorPeakGaussian": "simcats.sensor.SensorPeakGaussian",
+    "simcats.sensor._sensor_peak_lorentzian.SensorPeakLorentzian": "simcats.sensor.SensorPeakLorentzian",
+    "simcats.sensor._sensor_rise_glf.SensorRiseGLF": "simcats.sensor.SensorRiseGLF",
+    "simcats.sensor.barrier_function._barrier_function_glf.BarrierFunctionGLF": "simcats.sensor.barrier_function.BarrierFunctionGLF",
+    "simcats.sensor.barrier_function._barrier_function_multi_glf.BarrierFunctionMultiGLF": "simcats.sensor.barrier_function.BarrierFunctionMultiGLF",
+    "simcats.sensor.deformation._sensor_peak_deformation_circle.SensorPeakDeformationCircle": "simcats.sensor.deformation.SensorPeakDeformationCircle",
+    "simcats.sensor.deformation._sensor_peak_deformation_linear.SensorPeakDeformationLinear": "simcats.sensor.deformation.SensorPeakDeformationLinear",
+    "simcats.sensor._sensor_generic.SensorGeneric": "simcats.sensor.SensorGeneric",
+    "simcats.sensor._sensor_scan_sensor_generic.SensorScanSensorGeneric": "simcats.sensor.SensorScanSensorGeneric",
     "simcats.support_functions._parameter_sampling.ParameterSamplingInterface": "simcats.support_functions.ParameterSamplingInterface",
     "simcats.support_functions._parameter_sampling.NormalSamplingRange": "simcats.support_functions.NormalSamplingRange",
+    "simcats.support_functions._parameter_sampling.LogNormalSamplingRange": "simcats.support_functions.LogNormalSamplingRange",
     "simcats.support_functions._parameter_sampling.UniformSamplingRange": "simcats.support_functions.UniformSamplingRange",
+    "simcats.support_functions._parameter_sampling.ExponentialSamplingRange": "simcats.support_functions.ExponentialSamplingRange",
     "simcats._simulation.Simulation": "simcats.Simulation",
 }
 graphviz_output_format = "svg"

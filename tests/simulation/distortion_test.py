@@ -60,9 +60,9 @@ class DistortionTests(unittest.TestCase):
             lead_transitions_noisy,
             _,
         ) = self.sim.measure(
-            sweep_range_g1,
-            sweep_range_g2,
-            resolution,
+            sweep_range_g1=sweep_range_g1,
+            sweep_range_g2=sweep_range_g2,
+            resolution=resolution,
         )
 
         # set noise to None
@@ -76,9 +76,9 @@ class DistortionTests(unittest.TestCase):
             lead_transitions_noiseless,
             _,
         ) = self.sim.measure(
-            sweep_range_g1,
-            sweep_range_g2,
-            resolution,
+            sweep_range_g1=sweep_range_g1,
+            sweep_range_g2=sweep_range_g2,
+            resolution=resolution,
         )
 
         return (
@@ -351,9 +351,9 @@ class DistortionTests(unittest.TestCase):
             lead_transitions,
             _,
         ) = self.sim.measure(
-            sweep_range_g1,
-            sweep_range_g2,
-            resolution,
+            sweep_range_g1=sweep_range_g1,
+            sweep_range_g2=sweep_range_g2,
+            resolution=resolution,
         )
 
         file_path = str(

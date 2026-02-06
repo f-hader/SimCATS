@@ -9,7 +9,7 @@ import math
 
 # used to check if a single x-value was passed to x_eval
 import numbers
-from typing import Union
+from typing import Union, Optional
 
 import bezier
 import numpy as np
@@ -19,8 +19,8 @@ import sympy
 def tct_bezier(
     tct_params: np.ndarray,
     x_eval: Union[np.ndarray, numbers.Number],
-    lut_entries: Union[int, None] = None,
-    max_peaks: Union[int, None] = None,
+    lut_entries: Optional[int] = None,
+    max_peaks: Optional[int] = None,
 ) -> Union[np.ndarray, numbers.Number]:
     """Evaluates a total charge transition (TCT) with bezier curves and linear parts.
     A TCT separates the region with n electrons and the region with n+1 electrons in the system. The TCTs (series of
@@ -38,9 +38,9 @@ def tct_bezier(
             [6] = end position x (bezier curve rightmost point) (in x-/voltage-space, not number of points) \n
             [7] = end position y (bezier curve rightmost point) (in x-/voltage-space, not number of points)
         x_eval (Union[np.ndarray, numbers.Number]): X-values for which the function is evaluated or a single x-value.
-        lut_entries (Union[int, None]): Number of samples for the lookup-table. If this is not None, a lookup-table will
+        lut_entries (Optional[int]): Number of samples for the lookup-table. If this is not None, a lookup-table will
             be used to evaluate the points on the bezier curve, else it is solved explicitly. Default is None.
-        max_peaks (Union[int, None]): Limit for the number of peaks of the TCT. If multiple TCTs are supplied, max_peaks
+        max_peaks (Optional[int]): Limit for the number of peaks of the TCT. If multiple TCTs are supplied, max_peaks
             is increased by 1 for every further wavefront. If None, all TCTs have an unlimited number of peaks and no
             outer linear part. Default is None.
 

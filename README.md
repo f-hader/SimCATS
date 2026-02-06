@@ -24,7 +24,9 @@
 # SimCATS
 
 Simulation of CSDs for Automated Tuning Solutions (`SimCATS`) is a Python framework for simulating charge stability 
-diagrams (CSDs) typically measured during the tuning process of qubits.
+diagrams (CSDs) typically measured during the tuning process of qubits. <br>
+Starting with version 2.0, the framework additionally allows simulating sensor scans. This enables to simulate the
+(re)configuration of the sensor dot before measuring a CSD. 
 
 ## Installation
 
@@ -46,9 +48,10 @@ For the installation in development/editable mode, use the option `-e`.
 After installing the package, a good starting point is a look into the Jupyter Notebook 
 `example_SimCATS_simulation_class.ipynb`, which provides an overview of the usage of the simulation class offered by 
 the framework. 
-For more detailed examples and explanations of the geometric ideal CSD simulation using Total Charge Transitions (TCTs), look at the Jupyter Notebook `example_SimCATS_IdealCSDGeometric.ipynb`. This notebook also includes a hint
-regarding the generation of required labels for training algorithms that might need line labels defined as start and
-end points or require semantic information about particular transitions.
+For more detailed examples and explanations of the geometric ideal CSD simulation using Total Charge Transitions (TCTs),
+look at the Jupyter Notebook `example_SimCATS_IdealCSDGeometric.ipynb`. This notebook also includes a hint regarding the
+generation of required labels for training algorithms that might need line labels defined as start and end points or
+require semantic information about particular transitions.
 
 ## Tests
 
@@ -68,7 +71,8 @@ pytest --cov=simcats -n auto --dist loadfile .\tests\
 
 The argument 
 - `--cov=simcats` enables a coverage summary of the `SimCATS` package,
-- `-n auto` enables the test to run with multiple threads (auto will choose as many threads as possible, but can be replaced with a specific number of threads to use), and
+- `-n auto` enables the test to run with multiple threads (auto will choose as many threads as possible, but can be
+replaced with a specific number of threads to use), and
 - `--dist loadfile` specifies that each file should be executed only by one thread.
 
 <!-- start sec:documentation -->
@@ -95,8 +99,8 @@ To view the generated HTML documentation, open the file `docs\build\html\index.h
 The primary user interface for `SimCATS` is the class `Simulation`, which combines all the necessary functionalities to
 measure (simulate) a CSD and adjust the parameters for the simulated measurement. The class `Simulation` and default
 configurations for the simulation (`default_configs`) can be imported directly from `simcats`. Aside from that,
-`SimCATS` contains the subpackages `ideal_csd`, `sensor`, `distortions`, and `support_functions`, described in
-the following sections.
+`SimCATS` contains the subpackages `ideal_csd`, `sensor`, `distortions`, and `support_functions`, described in the
+following sections.
 
 ### Module `simulation`
 
@@ -105,21 +109,24 @@ An instance of the simulation class requires
 -   an implementation of the `IdealCSDInterface` for the simulation of ideal CSD data,
 -   an implementation of the `SensorInterface` for the simulation of the sensor (dot) reaction based on the ideal CSD
 data, and
--   (optionally) implementations of the desired types of distortions, which can be implementations from `OccupationDistortionInterface`, `SensorPotentialDistortionInterface`, or `SensorResponseDistortionInterface`.
+-   (optionally) implementations of the desired types of distortions, which can be implementations from
+`OccupationDistortionInterface`, `SensorPotentialDistortionInterface`, or `SensorResponseDistortionInterface`.
 
 With an initialized instance of the `Simulation` class, it is possible to run simulations using the `measure` function
 (see `example_SimCATS_simulation_class.ipynb`).
 
 ### Subpackage `ideal_csd`
 
-This subpackage contains the `IdealCSDInterface` used by the `Simulation` class  and an implementation of
-the `IdealCSDInterface` (`IdealCSDGeometric`) based on our geometric simulation approach.
+This subpackage contains the `IdealCSDInterface` used by the `Simulation` class and an implementation of the
+`IdealCSDInterface` (`IdealCSDGeometric`) based on our geometric simulation approach. Please have a look at the notebook
+`example_SimCATS_IdealCSDGeometric.ipynb` and the `SimCATS` paper for detailed explanations regarding the geometric
+approach.
 Additionally, it contains in the subpackage `geometric` the functions used by `IdealCSDGeometric`, including the
 implementation of the total charge transition (TCT) definition and functions for calculating the occupations using TCTs.
 
 ### Subpackage `distortions`
 
-The distortions subpackage contains the `DistortionInterface` from which the `OccupationDistortionInterface`, the 
+The `distortions` subpackage contains the `DistortionInterface` from which the `OccupationDistortionInterface`, the 
 `SensorPotentialDistortionInterface`, and the `SensorResponseDistortionInterface` are derived. Distortion functions used
 in the `Simulation` class have to implement these specific interfaces. Implemented distortions included in the
 subpackage are:
@@ -130,22 +137,41 @@ subpackage are:
 -   dot jumps, simulated using the algorithm described in ["Toward Robust Autotuning of Noisy Quantum Dot Devices" by Ziegler et al.](https://doi.org/10.1103/PhysRevApplied.17.024069) (In the `Simulation` class, this is applied to a whole block of rows or columns, but there is also a function for applying it linewise.), and
 -   lead transition blurring, simulated using Gaussian or Fermi-Dirac blurring.
 
-The implementations also offer the option to set ratios (parameter `ratio`) for the occurrence of the distortion (e.g. dot jumps may only happen sometimes and not in every measurement). Moreover, it is also possible to sample the
-noise parameters from a given sampling range using an object of type `ParameterSamplingInterface`.
-Classes for randomly sampling from a normal distribution or a uniform distribution within a given range are available in
-the subpackage `support_functions`.
-In this case, the strength is randomly chosen from the given range for every measurement.
-Additionally, it is possible to specify that this range should be a smaller subrange of the provided range.
-This allows restricting distortion fluctuations during a simulation while enabling a large variety of different strengths
-for the initialization of the objects. <br>
-RTN, dot jumps, and lead transition blurring are applied in the pixel domain. However, the jump length or the blurring strength should be consistent in the voltage domain even if the resolution changes. Therefore, the parameters
-are given in the voltage domain and adjusted according to the resolution in terms of pixel per voltage. <br>
-For a simulated measurement with a continuous voltage sweep involving an averaging for each pixel, the noise strength of the
-white and pink noise should be adjusted if the resolution (volt per pixel) changes, due to smoothing out the noise. This smoothing depends on the type of averaging used and is not incorporated in the default implementation.
+The implementations also offer the option to set ratios (parameter `ratio`) for the occurrence of the distortion (e.g.
+dot jumps may only happen sometimes and not in every measurement). Moreover, it is also possible to sample the noise
+parameters from a given sampling range using an object of type `ParameterSamplingInterface`. Classes for randomly
+sampling from a normal distribution or a uniform distribution within a given range are available in the subpackage
+`support_functions`. In this case, the strength is randomly chosen from the given range for every measurement. 
+Additionally, it is possible to specify that this range should be a smaller subrange of the provided range. This allows
+restricting distortion fluctuations during a simulation while enabling a large variety of different strengths for the
+initialization of the objects. <br>
+RTN, dot jumps, and lead transition blurring are applied in the pixel domain. However, the jump length or the blurring
+strength should be consistent in the voltage domain even if the resolution changes. Therefore, the parameters are given
+in the voltage domain and adjusted according to the resolution in terms of pixel per voltage. <br>
+For a simulated measurement with a continuous voltage sweep involving an averaging for each pixel, the noise strength of
+the white and pink noise should be adjusted if the resolution (volt per pixel) changes, due to smoothing out the noise.
+This smoothing depends on the type of averaging used and is not incorporated in the default implementation.
 
 ### Subpackage `sensor`
 
-This subpackage contains the `SensorInterface` that defines how a sensor simulation must be implemented to be used by the `Simulation` class. The `SensorPeakInterface` provides the desired representation for the definition of the Coulomb peaks the sensor uses. `SensorGeneric` implements the `SensorInterface` and offers functions for simulating the sensor response and potential. It offers the possibility to simulate with a single peak or multiple sensor peaks. Current implementations of the `SensorPeakInterface` are `SensorPeakGaussian` and `SensorPeakLorentzian`.
+This subpackage contains the `SensorInterface` that defines how a sensor simulation must be implemented to be used by
+the `Simulation` class. The `SensorPeakInterface` provides the desired representation for the definition of the Coulomb
+peaks the sensor uses. `SensorGeneric` implements the `SensorInterface` and offers functions for simulating the sensor
+response and potential. It offers the possibility to simulate with a single peak or multiple sensor peaks. Current
+implementations of the `SensorPeakInterface` are `SensorPeakGaussian` and `SensorPeakLorentzian`. <br>
+Starting with version 2.0, an extension of the `SensorInterface` called `SensorScanSensorInterface` is available.
+Implementations of this interface allow simulating sensor scans in addition to CSDs. This enables to simulate the
+(re)configuration of the sensor dot before measuring a CSD. `SensorScanSensorGeneric` implements the
+`SensorScanSensorInterface`, modeling the sensor dot as three resistors in series (barrier, dot, barrier). The function
+describing the dot is similar to the function in the `SensorGeneric`, but has an additional final rise of the signal
+after the last Coulomb peak (an implementation of the `SensorRiseInterface`). A new interface called 
+`BarrierFunctionInterface` defines how the barrier functions must be implemented. These functions, which basically model 
+the shape of a pinch-off measurement, are currently implemented using generalized logistic functions 
+(`BarrierFunctionGLF`, `BarrierFunctionMultiGLF`). The potentials for both barriers and the dot itself are calculated 
+from the applied voltages and provided lever-arms. Then, the barrier and dot functions are applied to calculate the 
+individual conductances. Finally, these conductances are combined to retrieve the sensor signal (proportional to the 
+total conductance across the sensor dot). 
+
 
 ### Subpackage `support_functions`
 
@@ -185,4 +211,4 @@ This work is licensed under a
 
 Contributions must follow the Contributor License Agreement. For more information, see the CONTRIBUTING.md file at the top of the GitHub repository.
 
-Copyright © 2024 Forschungszentrum Jülich GmbH - Central Institute of Engineering, Electronics and Analytics (ZEA) - Electronic Systems (ZEA-2)
+Copyright © 2026 Peter Grünberg Institute - Integrated Computing Architectures (ICA / PGI-4), Forschungszentrum Jülich GmbH

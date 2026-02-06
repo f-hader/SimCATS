@@ -64,7 +64,7 @@ class OccupationDistortionInterface(DistortionInterface):
                 gate.
             volt_limits_g2 (np.ndarray): Contains the beginning and ending of the swept range for the second (plunger)
                 gate.
-            generate_csd (Union[Callable, None]): Function which generates data points outside the swept gate range.
+            generate_csd (Optional[Callable]): Function which generates data points outside the swept gate range.
                 This is especially required for distortions, which shift the CSD structure. The generated data points
                 also have to contain the distortions, which have already been added to the occupation and
                 lead_transitions before. Default is None.

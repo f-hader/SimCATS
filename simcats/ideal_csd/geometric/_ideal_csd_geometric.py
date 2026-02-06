@@ -4,7 +4,7 @@ transitions (TCTs), voltage ranges and a desired resolution. It also implements 
 @author: f.hader
 """
 
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Optional
 
 import numpy as np
 
@@ -25,9 +25,9 @@ def ideal_csd_geometric(
     volt_limits_g2: np.ndarray,
     resolution: Union[int, np.ndarray] = np.array([100, 100]),
     rotation: float = -np.pi / 4,
-    lut_entries: Union[int, None] = None,
+    lut_entries: Optional[int] = None,
     cdf_type: str = "sigmoid",
-    cdf_gamma_factor: Union[float, None] = None,
+    cdf_gamma_factor: Optional[float] = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Generate an ideal Charge Stability Diagram (CSD) based on the supplied parameters.
 
@@ -60,12 +60,12 @@ def ideal_csd_geometric(
             [res_g1, res_g2]
         rotation (float): Float value defining the rotation to be applied to the TCT (which is usually represented
             with the tct_params rotated by 45 degrees). Default is -np.pi/4.
-        lut_entries (Union[int, None]): Number of samples for the lookup-table for bezier curves. If this is not None, a
+        lut_entries (Optional[int]): Number of samples for the lookup-table for bezier curves. If this is not None, a
             lookup-table will be used to evaluate the points on the bezier curves, else they are solved explicitly.
             Using a lookup-table speeds up the calculation at the possible cost of accuracy. Default is None.
         cdf_type (str): Name of the type of cumulative distribution function (CDF) to be used. Can be either
             "cauchy" or "sigmoid". Default is "sigmoid".
-        cdf_gamma_factor (Union[float, None]): The factor used for the calculation of the gamma values of the CDF.
+        cdf_gamma_factor (Optional[float]): The factor used for the calculation of the gamma values of the CDF.
             If set to None (=default) the default values for the selected cdf_type are used. \n
             Gamma is calculated as follows: \n
             gamma = width_bezier_curve / cdf_gamma_factor \n

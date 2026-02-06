@@ -17,6 +17,7 @@
 
    notebooks/example_SimCATS_Simulation_class
    notebooks/example_SimCATS_IdealCSDGeometric
+   notebooks/example_SimCATS_SensorSimulation
 
 .. toctree::
    :maxdepth: 3

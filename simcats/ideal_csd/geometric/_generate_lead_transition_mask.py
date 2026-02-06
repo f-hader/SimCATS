@@ -4,7 +4,7 @@ measurements.
 @author: f.hader
 """
 
-from typing import Callable, Dict, Union
+from typing import Callable, Dict, Optional
 
 import numpy as np
 
@@ -48,7 +48,7 @@ def generate_lead_transition_mask_2d(
     volt_limits_g2: np.ndarray,
     tct_functions: Dict[int, Callable],
     rotation: float = -np.pi / 4,
-    lut_entries: Union[int, None] = None,
+    lut_entries: Optional[int] = None,
 ) -> np.ndarray:
     """Generates the ground truth label mask for the lead transitions of 2D scans.
 
@@ -71,7 +71,7 @@ def generate_lead_transition_mask_2d(
             items should be partially initialized versions of the function "tct_bezier".
         rotation (float): The rotation to be applied to the TCT(s) (which is/are usually represented rotated by 45
             degrees). Default is -np.pi/4.
-        lut_entries (Union[int, None]): Number of samples for the lookup-table. If this is not None, a lookup-table will be used to
+        lut_entries (Optional[int]): Number of samples for the lookup-table. If this is not None, a lookup-table will be used to
             evaluate the points on the bezier curve. Default is None.
 
     Returns:

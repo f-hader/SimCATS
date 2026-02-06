@@ -155,7 +155,7 @@ class SensorGeneric(SensorInterface):
     def __repr__(self):
         return (
             self.__class__.__name__
-            + f"(sensor_peak_function={self.__sensor_peak_function}, alpha_dot={self.__alpha_dot}, alpha_gate={self.__alpha_gate}, offset_mu_sens={self.__offset_mu_sens})"
+            + f"(sensor_peak_function={self.__sensor_peak_function}, alpha_dot={repr(self.__alpha_dot)}, alpha_gate={repr(self.__alpha_gate)}, offset_mu_sens={self.__offset_mu_sens})"
         )
 
     def sensor_response(self, mu_sens: np.ndarray) -> np.ndarray:

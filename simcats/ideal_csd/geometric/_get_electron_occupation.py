@@ -8,7 +8,7 @@ numbers are calculated without the need for a lead transition mask.
 """
 
 from functools import partial
-from typing import Callable, Dict, Tuple, Union
+from typing import Callable, Dict, Tuple, Optional
 
 # used to find all regions
 import diplib as dip
@@ -86,9 +86,9 @@ def get_electron_occupation(
     bezier_coords: Dict[int, np.ndarray],
     tct_functions: Dict[int, Callable],
     rotation: float = -np.pi / 4,
-    lut_entries: Union[int, None] = None,
+    lut_entries: Optional[int] = None,
     cdf_type: str = "sigmoid",
-    cdf_gamma_factor: Union[float, None] = None,
+    cdf_gamma_factor: Optional[float] = None,
 ) -> np.ndarray:
     """Calculates the electron occupations for a given CSD represented by a numpy array.
 
@@ -113,11 +113,11 @@ def get_electron_occupation(
             system) and the items should be partially initialized versions of the function "tct_bezier".
         rotation (float): The rotation that has been applied to the TCT (which is usually represented with the
             tct_params rotated by 45 degrees). Default: is -np.pi/4.
-        lut_entries (Union[int, None]): Number of samples for the lookup-table for the bezier curves. If this is not
+        lut_entries (Optional[int]): Number of samples for the lookup-table for the bezier curves. If this is not
             None, a lookup-table will be used to evaluate the points on the bezier curve. Default is None.
         cdf_type (str): Name of the type of cumulative distribution function (CDF) to be used for interdot transitions.
             Can be either "cauchy" or "sigmoid. Default is "sigmoid".
-        cdf_gamma_factor (Union[float, None]): The factor used for the calculation of the gamma values of the CDF.
+        cdf_gamma_factor (Optional[float]): The factor used for the calculation of the gamma values of the CDF.
             If set to None, the default values for the selected cdf_type are used (2.2 for sigmoid, 6.15 for cauchy). \n
             Gamma is calculated as follows: \n
             gamma = width_bezier_curve / cdf_gamma_factor. \n

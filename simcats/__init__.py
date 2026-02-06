@@ -2,8 +2,9 @@
 process of qubits.
 """
 
-from ._simulation import Simulation
-from ._default_configs import default_configs
+from simcats._simulation import Simulation
+from simcats._default_configs import default_configs
 
 __all__ = ["Simulation", "default_configs"]
-__version__ = "1.2.0"
+
+__version__ = "2.0.0"

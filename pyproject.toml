@@ -1,15 +1,18 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "simcats"
-version = "1.2.0" # also update in docs (conf.py) and simcats (__init__.py)
-license = { text="CC BY-NC-SA 4.0" }
+version = "2.0.0" # also update in docs (conf.py) and simcats (__init__.py)
+license = "CC-BY-NC-SA-4.0"
+license-files = ["LICENSE"]
 authors = [
     { name="Fabian Hader", email="f.hader@fz-juelich.de" },
     { name="Sarah Fleitmann", email="s.fleitmann@fz-juelich.de" },
+    { name="Benjamin Papajewski", email="b.papajewski@fz-juelich.de"},
     { name="Fabian Fuchs", email="f.fuchs@fz-juelich.de" },
+    { name="Karin Havemann", email="k.havemann@fz-juelich.de" },
     { name="Jan Vogelbruch", email="j.vogelbruch@fz-juelich.de" },
 ]
 description = """\

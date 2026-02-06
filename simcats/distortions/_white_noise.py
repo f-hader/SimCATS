@@ -3,7 +3,7 @@
 @author: s.fleitmann
 """
 
-from typing import Union
+from typing import Union, Optional
 
 import numpy as np
 
@@ -51,7 +51,7 @@ class SensorResponseWhiteNoise(SensorResponseDistortionInterface):
         self.__rng = rng
 
     @property
-    def latest_sigma(self) -> Union[float, None]:
+    def latest_sigma(self) -> Optional[float]:
         """The sigma that was used for the latest simulation.
 
         This is necessary because, depending on the setting, a sampler can be used instead of a fixed sigma.

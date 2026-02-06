@@ -7,11 +7,9 @@ The contained functions can be used for example for the parameter sampling in th
 
 import warnings
 from abc import ABC, abstractmethod
-from typing import Tuple, Union
+from typing import Tuple, Optional
 
 import numpy as np
-
-__all__ = []
 
 
 class ParameterSamplingInterface(ABC):
@@ -47,9 +45,9 @@ class NormalSamplingRange(ParameterSamplingInterface):
         self,
         total_range: Tuple,
         std: float,
-        mean: Union[float, None] = None,
-        sampling_range: Union[float, None] = None,
-        rng: Union[np.random.Generator, None] = None,
+        mean: Optional[float] = None,
+        sampling_range: Optional[float] = None,
+        rng: Optional[np.random.Generator] = None,
     ) -> None:
         """This class can be used to generate randomly normal sampled parameters within a given range.
 
@@ -61,9 +59,9 @@ class NormalSamplingRange(ParameterSamplingInterface):
                 range, a new sample is drawn until a sample inside the sampling_range/total_range was generated,
                 leading to a truncated normal distribution.
             std (float): The standard deviation of the sampled elements, which is used in the normal distribution.
-            mean (Union[float, None]): The mean to be used for the normal distribution. If None, the center of the
+            mean (Optional[float]): The mean to be used for the normal distribution. If None, the center of the
                 total range will be used. Defaults to None.
-            sampling_range (Union[float, None]): The maximum range in which the parameter is allowed to change during
+            sampling_range (Optional[float]): The maximum range in which the parameter is allowed to change during
                 the simulation. The explicit range is set up during the initialization, narrowing down the
                 supplied total_range. Default is None, which leads to no narrowing of the given total_range.
             rng (np.random.Generator): random number generator used for the sampling of random numbers. If None,  the
@@ -118,8 +116,8 @@ class UniformSamplingRange(ParameterSamplingInterface):
     def __init__(
         self,
         total_range: Tuple,
-        sampling_range: Union[float, None] = None,
-        rng: Union[np.random.Generator, None] = None,
+        sampling_range: Optional[float] = None,
+        rng: Optional[np.random.Generator] = None,
     ) -> None:
         """This class can be used to generate randomly uniform sampled parameters within a given range.
 
@@ -128,11 +126,11 @@ class UniformSamplingRange(ParameterSamplingInterface):
         Args:
             total_range (Tuple): The total range in which the parameters can be sampled. This can be narrowed down
                 randomly with the help of sampling_range.
-            sampling_range (Union[float, None]): The maximum range in which the parameter is allowed to change during
+            sampling_range (Optional[float]): The maximum range in which the parameter is allowed to change during
                 the simulation. The explicit range is set up during the initialization, narrowing down the supplied
                 total_range. Default is None, which leads to no narrowing of the given total_range.
-            rng (np.random.Generator): random number generator used for the sampling of random numbers. If None,  the
-                default generator of numpy (np.random.default_rng()) is used. Default is None.
+            rng (Optional[np.random.Generator]): Random number generator used for the sampling of random numbers. If
+                None, the default generator of numpy (np.random.default_rng()) is used. Default is None.
         """
         if rng:
             self.__rng = rng
@@ -172,8 +170,8 @@ class LogNormalSamplingRange(ParameterSamplingInterface):
     def __init__(
         self,
         total_range: Tuple,
-        sampling_range: Union[float, None] = None,
-        rng: Union[np.random.Generator, None] = None,
+        sampling_range: Optional[float] = None,
+        rng: Optional[np.random.Generator] = None,
         mean: float = 0,
         sigma: float = 1,
     ) -> None:
@@ -186,11 +184,11 @@ class LogNormalSamplingRange(ParameterSamplingInterface):
                 randomly with the help of sampling_range. If the log-normal distribution generates a sample outside this
                 range, a new sample is drawn until a sample inside the sampling_range/total_range was generated, leading
                 toa truncated log-normal distribution.
-            sampling_range (Union[float, None]): The maximum range in which the parameter is allowed to change during
+            sampling_range (Optional[float]): The maximum range in which the parameter is allowed to change during
                 the simulation. The explicit range is set up during the initialization, narrowing down the supplied
                 total_range. Default is None, which leads to no narrowing of the given total_range.
-            rng (np.random.Generator): random number generator used for the sampling of random numbers. If None,  the
-                default generator of numpy (np.random.default_rng()) is used. Default is None.
+            rng (Optional[np.random.Generator]): Random number generator used for the sampling of random numbers. If
+                None, the default generator of numpy (np.random.default_rng()) is used. Default is None.
             mean (float): Mean value of the underlying normal distribution. Default is 0.
             sigma (float): Standard deviation of the underlying normal distribution. Must be non-negative. Default is 1.
         """
@@ -247,8 +245,8 @@ class ExponentialSamplingRange(ParameterSamplingInterface):
             self,
             total_range: Tuple,
             scale: float,
-            sampling_range: Union[float, None] = None,
-            rng: Union[np.random.Generator, None] = None,
+            sampling_range: Optional[float] = None,
+            rng: Optional[np.random.Generator] = None,
     ) -> None:
         """This class can be used to generate randomly sampled parameters from an exponential distribution within a given range.
 
@@ -275,11 +273,11 @@ class ExponentialSamplingRange(ParameterSamplingInterface):
                 was generated, leading to a truncated exponential distribution.
             scale (float): The scale of the exponential distribution. See __init__ docstring for more detailed
                 information.
-            sampling_range (Union[float, None]): The maximum range in which the parameter is allowed to change during
+            sampling_range (Optional[float]): The maximum range in which the parameter is allowed to change during
                 the simulation. The explicit range is set up during the initialization, narrowing down the
                 supplied total_range. Default is None, which leads to no narrowing of the given total_range.
-            rng (np.random.Generator): random number generator used for the sampling of random numbers. If None, the
-                default generator of numpy (np.random.default_rng()) is used. Default is None.
+            rng (Optional[np.random.Generator]): Random number generator used for the sampling of random numbers. If
+                None, the default generator of numpy (np.random.default_rng()) is used. Default is None.
         """
         if rng:
             self.__rng = rng

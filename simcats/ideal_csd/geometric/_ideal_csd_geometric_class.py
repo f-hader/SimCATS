@@ -4,7 +4,7 @@ transitions (TCTs), voltage ranges and a desired resolution. It also implements 
 @author: f.hader
 """
 
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Optional
 
 import numpy as np
 
@@ -21,9 +21,9 @@ class IdealCSDGeometric(IdealCSDInterface):
         self,
         tct_params: List[np.ndarray],
         rotation: float = -np.pi / 4,
-        lut_entries: Union[int, None] = None,
+        lut_entries: Optional[int] = None,
         cdf_type: str = "sigmoid",
-        cdf_gamma_factor: Union[float, None] = None,
+        cdf_gamma_factor: Optional[float] = None,
     ) -> None:
         """Initializes an object of the class for the geometric simulation approach which is based on total charge
         transitions (TCTs).
@@ -42,12 +42,12 @@ class IdealCSDGeometric(IdealCSDInterface):
                 [7] = end position y (bezier curve rightmost point) (in x-/voltage-space, not number of points)
             rotation (float): Float value defining the rotation to be applied to the TCT (which is usually represented
                 with the tct_params rotated by 45 degrees). Default is -np.pi/4.
-            lut_entries (Union[int, None]): Number of samples for the lookup-table for bezier curves. If this is not None, a
+            lut_entries (Optional[int]): Number of samples for the lookup-table for bezier curves. If this is not None, a
                 lookup-table will be used to evaluate the points on the bezier curves, else they are solved explicitly.
                 Using a lookup-table speeds up the calculation at the possible cost of accuracy. Default is None.
             cdf_type (str): Name of the type of cumulative distribution function (CDF) to be used. Can be either
                 "cauchy" or "sigmoid". Default is "sigmoid".
-            cdf_gamma_factor (Union[float, None]): The factor used for the calculation of the gamma values of the CDF. If set to None
+            cdf_gamma_factor (Optional[float]): The factor used for the calculation of the gamma values of the CDF. If set to None
                 (=default) the default values for the selected cdf_type are used (2.2 for sigmoid, 6.15 for cauchy).
                 Default is None. \n
                 Gamma is calculated as follows: \n
@@ -82,14 +82,14 @@ class IdealCSDGeometric(IdealCSDInterface):
         self.__rotation = rotation
 
     @property
-    def lut_entries(self) -> Union[int, None]:
+    def lut_entries(self) -> Optional[int]:
         """Number of samples for the lookup-table for bezier curves. If this is not None, a lookup-table will be used to
         evaluate the points on the bezier curves, else they are solved explicitly.
         """
         return self.__lut_entries
 
     @lut_entries.setter
-    def lut_entries(self, lut_entries: Union[int, None]):
+    def lut_entries(self, lut_entries: Optional[int]):
         self.__lut_entries = lut_entries
 
     @property
@@ -102,14 +102,14 @@ class IdealCSDGeometric(IdealCSDInterface):
         self.__cdf_type = cdf_type
 
     @property
-    def cdf_gamma_factor(self) -> Union[float, None]:
+    def cdf_gamma_factor(self) -> Optional[float]:
         """The factor used for the calculation of the gamma values of the CDF. If set to None (=default) the default values
         for the selected cdf_type are used (2.2 for sigmoid, 6.15 for cauchy).
         """
         return self.__cdf_gamma_factor
 
     @cdf_gamma_factor.setter
-    def cdf_gamma_factor(self, cdf_gamma_factor: Union[float, None]):
+    def cdf_gamma_factor(self, cdf_gamma_factor: Optional[float]):
         self.__cdf_gamma_factor = cdf_gamma_factor
 
     def get_csd_data(

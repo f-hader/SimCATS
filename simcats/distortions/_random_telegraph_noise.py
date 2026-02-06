@@ -3,7 +3,7 @@
 @author: s.fleitmann
 """
 
-from typing import Union
+from typing import Union, Optional
 
 import numpy as np
 
@@ -102,7 +102,7 @@ class RandomTelegraphNoise(DistortionInterface):
         self.__rng = rng
 
     @property
-    def activated(self) -> Union[bool, None]:
+    def activated(self) -> Optional[bool]:
         """This is true if the noise was activated during the last call of noise function."""
         return self.__activated
 
@@ -149,8 +149,8 @@ class RandomTelegraphNoise(DistortionInterface):
                 )
         else:
             resolution = (original.shape[0], original.shape[0])
-            # sweep direction is always the x-axis direction
-            scale *= resolution[0] / (np.max(volt_limits_g1) - np.min(volt_limits_g1))
+            # sweep between starting and ending point
+            scale *= resolution[0] / np.maximum(np.max(volt_limits_g1) - np.min(volt_limits_g1), np.max(volt_limits_g2) - np.min(volt_limits_g2))
 
         try:
             std = self.std.sample_parameter()

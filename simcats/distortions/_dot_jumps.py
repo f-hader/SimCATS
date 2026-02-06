@@ -4,7 +4,7 @@
 """
 
 import warnings
-from typing import Callable, Tuple, Union
+from typing import Callable, Tuple, Union, Optional
 
 import numpy as np
 
@@ -106,7 +106,7 @@ class OccupationDotJumps(OccupationDistortionInterface):
         self.__rng = rng
 
     @property
-    def activated(self) -> Union[bool, None]:
+    def activated(self) -> Optional[bool]:
         """This is true if the noise was activated during the last call of noise function."""
         return self.__activated
 
@@ -139,14 +139,16 @@ class OccupationDotJumps(OccupationDistortionInterface):
                 gate.
             volt_limits_g2 (np.ndarray): Contains the beginning and ending of the swept range for the second (plunger)
                 gate.
-            generate_csd (Union[Callable, None]): Function which generates data points outside the swept gate range.
+            generate_csd (Optional[Callable]): Function which generates data points outside the swept gate range.
                 This is especially required for distortions, which shift the CSD structure. The generated data points
                 also have to contain the distortions, which have already been added to the occupation and
                 lead_transitions before. Defaults to None.
             freeze (bool): Indicates if the last used noise should be reused. This is important if there are noise
                 types which need to generate data from outside the current CSD (for example if a part of the structure
                 is shifted). This newly generated data also has to contain the noise which already has been applied to
-                the CSD before.
+                the CSD before. A use case for that is the application of dot jumps in vertical direction after the
+                application in horizontal direction. Due to the jumps in vertical direction new data might have to be
+                generated with generate_csd. In this data, the horizontal jumps also have to be applied.
 
         Returns:
             Tuple[np.ndarray, np.ndarray]: Occupation numbers and lead transition mask (in our case: total charge
@@ -686,7 +688,7 @@ def dot_jumps_pixelwise(
     original: np.ndarray,
     scale: float,
     lam: float,
-    noise: Union[np.ndarray, None] = None,
+    noise: Optional[np.ndarray] = None,
     rng: np.random.Generator = np.random.default_rng(),
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Adds dot jumps to the original image (pixelwise).
@@ -707,7 +709,7 @@ def dot_jumps_pixelwise(
             this case, scale specifies the length in pixels, so that a jump can start in the middle of a line and end in
             the middle of the next line. Given in pixels.
         lam (float): Lambda for the poisson distribution which specifies the height of the jumps. Given in pixels.
-        noise (Union[np.ndarray, None]): Noise which was generated with this method for a prior image and should be reapplied for
+        noise (Optional[np.ndarray]): Noise which was generated with this method for a prior image and should be reapplied for
             this image. Default is None.
         rng (np.random.Generator): The random number generator used for the simulation of random numbers. Default is
             np.random.default_rng().
